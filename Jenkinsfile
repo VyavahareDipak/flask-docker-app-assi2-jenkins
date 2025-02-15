@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'myusername/flask-app:latest'
+        IMAGE_NAME = 'dipak018/flask-app-ass2-img:latest'
         CONTAINER_NAME = 'flask-container'
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/your-username/flask-app.git'
+                git 'https://github.com/VyavahareDipak/flask-docker-app-assi2-jenkins.git'
             }
         }
 
@@ -25,12 +25,12 @@ pipeline {
             }
         }
 
-        stage('Pubat to Docker Hub') {
+        stage('Push to Docker Hub') {
             steps {
-                withCredentials([string(credentialsId: 'docker-hub-token', variable: 'DOCKER_PASSWORD')]) {
-                    bat "echo $DOCKER_PASSWORD | docker login -u myusername --password-stdin"
+                withCredentials([string(credentialsId: 'docker-hub-access-token', variable: 'DOCKER_PASSWORD')]) {
+                    bat "echo $DOCKER_PASSWORD | docker login -u dipak018 --password-stdin"
                 }
-                bat "docker pubat $IMAGE_NAME"
+                bat "docker push $IMAGE_NAME"
             }
         }
 
