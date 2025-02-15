@@ -26,12 +26,22 @@ pipeline {
         }
 stage('Push to Docker Hub') {
     steps {
-        withCredentials([string(credentialsId: 'docker-access-token', variable: 'DOCKER_PASSWORD')]) {
-            bat "echo %DOCKER_PASSWORD% | docker login -u dipak018 --password-stdin"
+        script {
+            withCredentials([string(credentialsId: 'docker-access-token', variable: 'DOCKER_PASSWORD')]) {
+                def loginCmd = bat(returnStatus: true, script: "echo %DOCKER_PASSWORD% | docker login -u dipak018 --password-stdin")
+                if (loginCmd != 0) {
+                    error("❌ Docker login failed! Check credentials.")
+                }
+            }
         }
-        bat "docker push %IMAGE_NAME%"
+        bat "echo IMAGE_NAME is %IMAGE_NAME%"
+        def pushStatus = bat(returnStatus: true, script: "docker push %IMAGE_NAME%")
+        if (pushStatus != 0) {
+            error("❌ Docker push failed! Check Docker Hub permissions.")
+        }
     }
 }
+
 
 
 
