@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/VyavahareDipak/flask-docker-app-assi2-jenkins.git'
+                git branch:"main" url:'https://github.com/VyavahareDipak/flask-docker-app-assi2-jenkins.git'
             }
         }
 
