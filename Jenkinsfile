@@ -33,7 +33,7 @@ stage('Push to Docker Hub') {
     }
 }
 
-}
+
 
 
         stage('Deploy Application') {
