@@ -28,7 +28,7 @@ pipeline {
         stage('Push to Docker Hub') {
     steps {
         withCredentials([string(credentialsId: 'docker-hub-access-token', variable: 'DOCKER_PASSWORD')]) {
-            bat "echo $DOCKER_PASSWORD | docker login -u dipak018 --password-stdin"
+            bat "echo $DOCKER_PASSWORD | docker login -u dipak018 $DOCKER_PASSWORD"
         }
         bat "docker push $IMAGE_NAME"
     }
